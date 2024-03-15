@@ -72,6 +72,17 @@ namespace PrimeraPracticaNetCore.Repositories
             return model;
         }
 
-        
+        public async Task SubirImagen(string imagen,int idZapa)
+        {
+            int maxId = await this.context.Imagenes.MaxAsync(x => x.IdImagen) + 1;
+            ImagenesZapa img = new ImagenesZapa
+            {
+                IdImagen = maxId,
+                IdProducto= idZapa,
+                Imagen=imagen
+            };
+            this.context.Imagenes.Add(img);
+            await this.context.SaveChangesAsync();
+        }
     }
 }

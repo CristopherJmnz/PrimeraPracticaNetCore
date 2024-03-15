@@ -65,7 +65,7 @@ namespace PrimeraPracticaNetCore.Controllers
         {
             foreach (string img in imagen)
             {
-                
+                await this.repo.SubirImagen(img, idZapa);
             }
             return RedirectToAction("Index");
         }
