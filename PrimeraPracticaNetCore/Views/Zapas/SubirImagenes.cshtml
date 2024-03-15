@@ -1,0 +1,32 @@
+﻿@model List<Zapatilla>
+<div class="py-3">
+    <button class="btn btn-danger" id="newBox">Añadir otra caja</button>
+    <form method="post">
+        <label>Zapatilla</label>
+        <select class="form-select" name="idzapa">
+            @foreach (Zapatilla zapa in Model)
+            {
+                <option value="@zapa.IdProducto">@zapa.Nombre</option>
+            }
+        </select>
+        <label>Imagen</label>
+        <div id="contInputs">
+            <input type="text" name="imagen" class="form-control mb-3"/>
+        </div>
+        <button class="btn btn-primary" type="submit">Subir</button>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $("#newBox").click(function () {
+            let container = $("#contInputs");
+            let input = $("<input>", {
+                "type": "text",
+                "name": "imagen",
+                "class":"form-control mb-3"
+            });
+            container.append(input);
+        })
+    </script>
+}

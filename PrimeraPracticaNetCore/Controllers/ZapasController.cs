@@ -54,5 +54,20 @@ namespace PrimeraPracticaNetCore.Controllers
             ViewData["POSICION"] = posicion;
             return View(model);
         }
+
+        public async Task<IActionResult> SubirImagenes()
+        {
+            List<Zapatilla> zapas=await this.repo.GetZapasAsync();
+            return View(zapas);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SubirImagenes(int idZapa,List<string>imagen)
+        {
+            foreach (string img in imagen)
+            {
+                
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
