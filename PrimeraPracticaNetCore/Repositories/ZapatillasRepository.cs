@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
 using PrimeraPracticaNetCore.Data;
 using PrimeraPracticaNetCore.Models;
 using System.Data;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PrimeraPracticaNetCore.Repositories
 {
@@ -54,7 +50,7 @@ namespace PrimeraPracticaNetCore.Repositories
                 .Where(x=>x.IdProducto== idZapa).ToListAsync();
         }
 
-        public async Task<ModelZapasImagen> FindZapaConIamgenesAsync
+        public async Task<ModelZapasImagen> FindZapaConImagenesAsync
             (int idZapa,int posicion)
         {
             string sql = "SP_IMAGENES_ZAPA @posicion, @idzapa, @registros out";
@@ -74,7 +70,8 @@ namespace PrimeraPracticaNetCore.Repositories
 
         public async Task SubirImagen(string imagen,int idZapa)
         {
-            int maxId = await this.context.Imagenes.MaxAsync(x => x.IdImagen) + 1;
+            int maxId = await this.context.Imagenes
+                .MaxAsync(x => x.IdImagen) + 1;
             ImagenesZapa img = new ImagenesZapa
             {
                 IdImagen = maxId,

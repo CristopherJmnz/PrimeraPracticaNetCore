@@ -25,7 +25,7 @@ namespace PrimeraPracticaNetCore.Controllers
                 posicion = 1;
             }
             ModelZapasImagen model= await this.repo
-                .FindZapaConIamgenesAsync(idZapa,posicion.Value);
+                .FindZapaConImagenesAsync(idZapa,posicion.Value);
             return View(model);
         }
 
@@ -36,7 +36,7 @@ namespace PrimeraPracticaNetCore.Controllers
                 posicion = 1;
             }
             ModelZapasImagen model = await this.repo
-                .FindZapaConIamgenesAsync(idZapa, posicion.Value);
+                .FindZapaConImagenesAsync(idZapa, posicion.Value);
             int siguiente = posicion.Value + 1;
             if (siguiente > model.NumeroRegistros)
             {
