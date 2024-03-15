@@ -1,0 +1,13 @@
+﻿@model ModelZapasImagen
+<div>
+        <h1 class="text-danger">
+            @Model.Zapatilla.Nombre
+        </h1>
+        <p>@Model.Zapatilla.Descripcion</p>
+</div>
+<div>
+    @foreach(ImagenesZapa img in Model.ImagenesZapa)
+    {
+        <img />
+    }
+</div>
