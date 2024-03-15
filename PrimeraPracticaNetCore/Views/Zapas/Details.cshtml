@@ -12,7 +12,7 @@
 @section Scripts{
     <script>
         function loadImagenes(posicion) {
-            $("#imagenes").load("/Zapas/PartialImagen?posicion=" + posicion 
+            $("#imagenes").load("/Zapas/_ImagenesPartial?posicion=" + posicion
             + "&idzapa=" + @Model.Zapatilla.IdProducto)
         }
         $(document).ready(function () {
