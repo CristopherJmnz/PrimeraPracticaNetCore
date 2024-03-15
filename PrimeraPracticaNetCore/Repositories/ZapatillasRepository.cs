@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using PrimeraPracticaNetCore.Data;
 using PrimeraPracticaNetCore.Models;
+using System.Data;
 
 namespace PrimeraPracticaNetCore.Repositories
 {
@@ -29,8 +32,25 @@ namespace PrimeraPracticaNetCore.Repositories
                 .Where(x=>x.IdProducto== idZapa).ToListAsync();
         }
 
-        public async Task<ModelZapasImagen> FindZapaConIamgenesAsync(int idZapa)
+        public async Task<ModelZapasImagen> FindZapaConIamgenesAsync
+            (int idZapa,int posicion)
         {
+            string sql = "SP_GRUPO_EMPLEADOS_DEPT @posicion, @idzapa, @registros out";
+            SqlParameter pamPosicion = new SqlParameter("@posicion", posicion);
+            SqlParameter pamId = new SqlParameter("@idzapa", idZapa);
+            SqlParameter pamRegistros = new SqlParameter("@registros", -1);
+            pamRegistros.Direction = ParameterDirection.Output;
+            var consulta = this.context.Imagenes.FromSqlRaw(sql, pamPosicion, pamId, pamRegistros);
+            ModelZapasImagen model = new ModelZapasImagen
+            {
+                Zapatilla= await this.FindZapaByIdAsync(idZapa),
+                ImagenZapa= consulta.AsEnumerable().FirstOrDefault(),
+                NumeroRegistros = (int)pamRegistros.Value
+            };
+            return model;
+
+
+
             Zapatilla zapa = await this.FindZapaByIdAsync(idZapa);
             List<ImagenesZapa> imagenes = await this.GetImagenesByZapaAsync(idZapa);
             return new ModelZapasImagen
@@ -39,5 +59,7 @@ namespace PrimeraPracticaNetCore.Repositories
                 Zapatilla=zapa
             };
         }
+
+        
     }
 }

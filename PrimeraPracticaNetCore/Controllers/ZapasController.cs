@@ -18,9 +18,14 @@ namespace PrimeraPracticaNetCore.Controllers
             return View(zapas);
         }
 
-        public async Task<IActionResult> Details(int idZapa)
+        public async Task<IActionResult> Details(int idZapa,int? posicion)
         {
-            ModelZapasImagen model= await this.repo.FindZapaConIamgenesAsync(idZapa);
+            if (posicion==null)
+            {
+                posicion = 1;
+            }
+            ModelZapasImagen model= await this.repo
+                .FindZapaConIamgenesAsync(idZapa,posicion.Value);
             return View(model);
         }
     }
