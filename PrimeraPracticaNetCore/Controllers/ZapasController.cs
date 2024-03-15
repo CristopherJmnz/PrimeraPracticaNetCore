@@ -37,17 +37,17 @@ namespace PrimeraPracticaNetCore.Controllers
             }
             ModelZapasImagen model = await this.repo
                 .FindZapaConIamgenesAsync(idZapa, posicion.Value);
-            ViewData["POSICION"] = posicion;
             int siguiente = posicion.Value + 1;
             if (siguiente > model.NumeroRegistros)
             {
-                siguiente = model.NumeroRegistros;
+                siguiente = 1;
             }
             int anterior = posicion.Value - 1;
             if (anterior < 1)
             {
-                anterior = 1;
+                anterior = model.NumeroRegistros;
             }
+            ViewData["POSICION"] = posicion;
             ViewData["ÚLTIMO"] = model.NumeroRegistros;
             ViewData["SIGUIENTE"] = siguiente;
             ViewData["ANTERIOR"] = anterior;
