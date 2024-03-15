@@ -1,14 +1,36 @@
-﻿using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using PrimeraPracticaNetCore.Data;
 using PrimeraPracticaNetCore.Models;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PrimeraPracticaNetCore.Repositories
 {
     public class ZapatillasRepository
     {
+        #region PROCEDURES
+
+//        create procedure SP_IMAGENES_ZAPA
+//(@posicion int, @idzapa int, @registros int out)
+//AS
+//    select @registros=count(IDIMAGEN)
+
+//    from IMAGENESZAPASPRACTICA
+//    where IDPRODUCTO = @idzapa;
+
+//        select IDIMAGEN, IDPRODUCTO, IMAGEN from(
+//        select cast(ROW_NUMBER() over (order by IMAGEN) as int) as posicion, 
+//	IDIMAGEN,IDPRODUCTO,IMAGEN
+//    from IMAGENESZAPASPRACTICA
+//    where IDPRODUCTO = @idzapa
+//	) as query where posicion >= @posicion and posicion<(@posicion+1)
+//GO
+
+        #endregion
         private ZapatillasContext context;
         public ZapatillasRepository(ZapatillasContext context)
         {
@@ -35,7 +57,7 @@ namespace PrimeraPracticaNetCore.Repositories
         public async Task<ModelZapasImagen> FindZapaConIamgenesAsync
             (int idZapa,int posicion)
         {
-            string sql = "SP_GRUPO_EMPLEADOS_DEPT @posicion, @idzapa, @registros out";
+            string sql = "SP_IMAGENES_ZAPA @posicion, @idzapa, @registros out";
             SqlParameter pamPosicion = new SqlParameter("@posicion", posicion);
             SqlParameter pamId = new SqlParameter("@idzapa", idZapa);
             SqlParameter pamRegistros = new SqlParameter("@registros", -1);
@@ -48,16 +70,6 @@ namespace PrimeraPracticaNetCore.Repositories
                 NumeroRegistros = (int)pamRegistros.Value
             };
             return model;
-
-
-
-            Zapatilla zapa = await this.FindZapaByIdAsync(idZapa);
-            List<ImagenesZapa> imagenes = await this.GetImagenesByZapaAsync(idZapa);
-            return new ModelZapasImagen
-            {
-                ImagenesZapa = imagenes,
-                Zapatilla=zapa
-            };
         }
 
         

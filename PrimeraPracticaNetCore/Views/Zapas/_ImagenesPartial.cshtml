@@ -1,0 +1,33 @@
+﻿@model ModelZapasImagen
+
+@{
+    Zapatilla zapa = Model.Zapatilla;
+}
+
+
+<h3 class="mt-3">
+     @ViewData["POSICION"] de @Model.NumeroRegistros
+</h3>
+
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item">
+        <button onclick="loadPaginacion(1)" class="btn">
+            Primero
+        </button>
+    </li>
+    <li class="list-group-item">
+        <button onclick="loadPaginacion(@ViewData["ANTERIOR"])" class="btn">
+            Anterior
+        </button>
+    </li>
+    <li class="list-group-item">
+        <button onclick="loadPaginacion(@ViewData["SIGUIENTE"])" class="btn">
+            Siguiente
+        </button>
+    </li>
+    <li class="list-group-item">
+        <button onclick="loadPaginacion(@ViewData["ÚLTIMO"])" class="btn">
+            Último
+        </button>
+    </li>
+</ul>

@@ -1,49 +1,22 @@
 ﻿@model PrimeraPracticaNetCore.Models.ModelZapasImagen
 
-@{
-    int pos = (int)ViewData["POSICION"];
-    int registros = (int)ViewData["REGISTROS"];
-    int next = pos + 1;
-    int prev = pos - 1;
-    if (registros == pos)
-    {
-        next = 1;
-    }
-    if (pos == 1)
-    {
-        prev = registros;
-    }
-}
-
-<h1>@Model.Departamento.Nombre</h1>
-
 <div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => @Model.Departamento.IdDepartamento)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => @Model.Departamento.IdDepartamento)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => @Model.Departamento.Nombre)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => @Model.Departamento.Nombre)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => @Model.Departamento.Localidad)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => @Model.Departamento.Localidad)
-        </dd>
-    </dl>
+    <h1>@Model.Zapatilla.Nombre</h1>
+    <p>@Model.Zapatilla.Descripcion</p>
 </div>
-@if (Model.Empleado != null)
-{
+<div id="imagenes">
+
+</div>
 
 
-
+@section Scripts{
+    <script>
+        function loadImagenes(posicion) {
+            $("#imagenes").load("/Zapas/PartialImagen?posicion=" + posicion 
+            + "&idzapa=" + @Model.Zapatilla.IdProducto)
+        }
+        $(document).ready(function () {
+            loadImagenes(1);
+        })
+    </script>
 }
-

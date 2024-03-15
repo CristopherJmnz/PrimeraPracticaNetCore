@@ -28,5 +28,31 @@ namespace PrimeraPracticaNetCore.Controllers
                 .FindZapaConIamgenesAsync(idZapa,posicion.Value);
             return View(model);
         }
+
+        public async Task<IActionResult> _ImagenesPartial(int idZapa, int? posicion)
+        {
+            if (posicion == null)
+            {
+                posicion = 1;
+            }
+            ModelZapasImagen model = await this.repo
+                .FindZapaConIamgenesAsync(idZapa, posicion.Value);
+            ViewData["POSICION"] = posicion;
+            int siguiente = posicion.Value + 1;
+            if (siguiente > model.NumeroRegistros)
+            {
+                siguiente = model.NumeroRegistros;
+            }
+            int anterior = posicion.Value - 1;
+            if (anterior < 1)
+            {
+                anterior = 1;
+            }
+            ViewData["ÚLTIMO"] = model.NumeroRegistros;
+            ViewData["SIGUIENTE"] = siguiente;
+            ViewData["ANTERIOR"] = anterior;
+            ViewData["POSICION"] = posicion;
+            return View(model);
+        }
     }
 }
